@@ -8,11 +8,11 @@ public class Char{
         image=url;
     }
     
-    public void changeX(int gx){
-        x+=(gx*speed);
+    public void changeX(){
+        x+=(2*speed);
     }
-    public void changeY(int gy){
-        y+=(gy*speed);
+    public void changeY(){
+        y+=speed;
     }
     public void changeSpeed(int s){
         speed=s;
