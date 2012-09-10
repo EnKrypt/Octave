@@ -23,16 +23,20 @@ class Map extends JPanel implements KeyListener{
     }
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==37){ //left
-            control.changeX();
+            control.changeX(-2*control.speed);
+            control.changeY(-control.speed);
         }
         if (e.getKeyCode()==38){ //up
-            control.changeY();
+            control.changeX(2*control.speed);
+            control.changeY(-control.speed);
         }
         if (e.getKeyCode()==39){ //right
-            control.changeX();
+            control.changeX(2*control.speed);
+            control.changeY(control.speed);
         }
         if (e.getKeyCode()==40){ //down
-            control.changeY();
+            control.changeX(-2*control.speed);
+            control.changeY(control.speed);
         }
         repaint();
     }
