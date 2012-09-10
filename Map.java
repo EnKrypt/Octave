@@ -13,6 +13,8 @@ class Map extends JPanel implements KeyListener{
     }
 
     public void paintComponent(Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,500,500);
         g.drawImage(Toolkit.getDefaultToolkit().getImage(control.image),control.x,control.y,this);
     }
     
