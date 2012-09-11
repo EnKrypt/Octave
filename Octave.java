@@ -59,7 +59,7 @@ public class Octave extends JFrame{
 	public Octave(){
 		JFrame frame=new JFrame("Octave - v1.1.0 Alpha");
 		frame.setSize(500,500);
-		Map map=new Map();
+		map=new Map();
 		frame.setContentPane(map);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
