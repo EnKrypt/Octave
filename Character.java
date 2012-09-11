@@ -66,7 +66,7 @@ public class Character extends MapEntity implements KeyListener{
      * @param url The "URL" (or local file) of the character's sprite.
     **/
     public Character(){
-        super("Character.png",3,4,0);
+        super(Octave.IMGROOT+"character.png",3,4,0);
     }
     
     /**
