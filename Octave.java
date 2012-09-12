@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 Aravind Kumar
+Copyright (C) 2012 Arvind Kumar
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,16 +24,20 @@ Please note that in the event that any source file or other resource in this pro
  * This is the entry point for Octave.
 **/
  
-
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Main class for Octave
  *
  * It contains the entry point, {@link #main(String[])}
 **/
-public class Octave extends JFrame{
+public class Octave extends JFrame implements ActionListener{
+	/**
+	 * To make Eclipse shut up
+	 */
+	static final long serialVersionUID=1000;
+
 	/**
 	 * The Frames Per Second of the game.
 	**/
@@ -47,7 +51,7 @@ public class Octave extends JFrame{
 	/**
 	 * The root folder of the image resources
 	**/
-	public static final String IMGROOT="resources/image/";
+	public static final String IMGROOT="resources/images/";
 
 	/**
 	 * The game's map controller instance.
@@ -55,6 +59,11 @@ public class Octave extends JFrame{
 	 * @see com.octave.game.Map
 	**/
 	Map map;
+    
+    /**
+     * Handles the game step timing.
+    **/
+    Timer step;
 
 	public Octave(){
 		JFrame frame=new JFrame("Octave - v1.1.0 Alpha");
@@ -63,13 +72,16 @@ public class Octave extends JFrame{
 		frame.setContentPane(map);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        step=new Timer(DELAY,this);
 	}
 
-	/**
-	 * The entry point.
-	**/
 	public static void main(String args[]){
 		Octave octave=new Octave();
+		octave.step.start();
 	}
    
+    public void actionPerformed(ActionEvent e){
+		map.step();
+        step.start();
+	}
 }

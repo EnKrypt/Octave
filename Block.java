@@ -1,3 +1,4 @@
+/*
 Copyright (C) 2012 Arvind Kumar
 
 This program is free software: you can redistribute it and/or modify
@@ -14,5 +15,17 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
+*/
 
-Octave is an in-development isometric modern-fantasy MMORPG.
+/**
+ * A general-purpose implementation of a block entity.
+ * 
+ * Suggestion: Subclass into specific block types?
+ */
+public class Block extends MapEntity{
+	Block(String sprite,int x,int y){
+		super(sprite,"block_mask.png",0,9,1,1,0);
+		this.x=x;
+		this.y=y;
+	}
+}

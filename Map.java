@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 Aravind Kumar
+Copyright (C) 2012 Arvind Kumar
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,46 +17,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
 */
 
- 
-
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
+import java.util.ArrayList;
 
 /**
  * Implements the game's map
 **/
-public class Map extends JPanel implements ActionListener{
+public class Map extends JPanel{
+	/**
+	 * To make Eclipse shut up.
+	 */
+	static final long serialVersionUID=1001;
     /**
      * The player's character instance.
      *
      * @see com.octave.game.Character
     **/
     Character player;
-    
-    /**
-     * Handles the game step timing.
-    **/
-    Timer step;
+	
+	/**
+	 * A list of entities to render to the map.
+	**/
+	ArrayList<MapEntity> entities;
 
     public Map(){
         player=new Character();
         addKeyListener(player);
+		entities=new ArrayList<MapEntity>(1);
+		add(player);
+		add(new Block("whitebox.png",160,160));
         setFocusable(true);
-        step=new Timer(Octave.DELAY,this);
-        step.start();
     }
 
     public void paintComponent(Graphics g){
         g.setColor(Color.WHITE);
         g.fillRect(0,0,500,500);
-        player.draw(g,this);
+		for(MapEntity entity:entities){
+			entity.draw(g,this);
+		}
     }
     
-    public void actionPerformed(ActionEvent e){
-        //game step event
-        player.move();
+	/**
+	 * Go through one game step.
+	**/
+	public void step(){
+		MapEntity o1,o2;
+		for(int i=0;i<entities.size();++i){
+			o1=entities.get(i);
+			o1.step();
+			//Check for collisions
+			for(int j=i+1;j<entities.size();++j){
+				o2=entities.get(j);
+				if(CollisionEngine.pixel_collision(o1,o2)){
+					o1.collide(o2);
+					o2.collide(o1);
+				}
+			}
+		}
         repaint();
-        step.start();
     }
+	
+	/**
+	 * Add an entity to the map.
+	 * 
+	 * @param e The MapEntity to add.
+	 * @return The MapEntity added.
+	 */
+	public MapEntity add(MapEntity e){
+		entities.add(e);
+		return e;
+	}
 }

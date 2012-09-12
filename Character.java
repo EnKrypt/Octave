@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 Aravind Kumar
+Copyright (C) 2012 Arvind Kumar
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,6 +47,16 @@ public class Character extends MapEntity implements KeyListener{
      * The constant representing a direction going up and left.
     **/
     public static final int UPLEFT=3;
+    
+    /**
+     * The last x value.
+     */
+    int prevx;
+    
+    /**
+     * The last y value.
+     */
+    int prevy;
 
     /**
      * The speed of the character in any direction (used to calculate movement).
@@ -66,13 +76,12 @@ public class Character extends MapEntity implements KeyListener{
      * @param url The "URL" (or local file) of the character's sprite.
     **/
     public Character(){
-        super(Octave.IMGROOT+"character.png",3,4,0);
+        super("character.png","character_mask.png",4,25,3,4,0);
     }
     
-    /**
-     * Move the character in the direction it's moving by its speed.
-    **/
-    public void move(){
+    public void step(){
+    	prevx=x;
+    	prevy=y;
         switch(direction){
             case UPRIGHT:
                 x+=2*speed;
@@ -156,5 +165,13 @@ public class Character extends MapEntity implements KeyListener{
             default:
                 return;
         }
+    }
+    
+    public void collide(MapEntity other){
+    	if(other instanceof Block){
+    		//Reset location (should resolve collision)
+    		x=prevx;
+    		y=prevy;
+    	}
     }
 }

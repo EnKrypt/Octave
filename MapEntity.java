@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 Aravind Kumar
+Copyright (C) 2012 Arvind Kumar
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,6 +32,11 @@ public class MapEntity{
      * A list of the entity's sprite frames.
     **/
     BufferedImage frames[];
+	
+	/**
+	 * The entity's collision mask.
+	**/
+	BufferedImage mask;
     
     /**
      * The number of horizontal images in frames.
@@ -42,6 +47,16 @@ public class MapEntity{
      * The number of vertical images in frames.
     **/
     int h;
+    
+    /**
+     * The width of a tile.
+     */
+    int tw;
+    
+    /**
+     * The height of a tile.
+     */
+    int th;
     
     /**
      * The speed at which the entity's sprite updates.
@@ -74,7 +89,18 @@ public class MapEntity{
     int y;
     
     /**
-     * @param url The URL (or local file path) of the entity's image.
+     * The mask's horizontal offset from the entity's x position component.
+     */
+    int mx;
+    
+    /**
+     * The mask's vertical offset from the entity's y position component.
+     */
+    int my;
+    
+    /**
+     * @param sprite The path to the entity's spritesheet.
+	 * @param cmask The path to the entity's collision mask.
      * @param cols The number of image columns used in the sprite (used to implement animation).
      * @param rows The number of image rows used in the sprite (used to implement animation).
      * @param hsep The horizontal separation of the frames.
@@ -82,28 +108,40 @@ public class MapEntity{
      * @param hoff The horizontal offset of the upper left frame.
      * @param voff The vertical offset of the upper left frame.
     **/
-    MapEntity(String url,int cols,int rows,int ispeed,int hsep,int vsep,int hoff,int voff){
+    MapEntity(String sprite,String cmask,int maskx,int masky,int cols,int rows,int ispeed,int hsep,int vsep,int hoff,int voff){
         BufferedImage img=null;
         try{
-            img=ImageIO.read(new File(url));
+            img=ImageIO.read(new File(Octave.IMGROOT+sprite));
+			mask=ImageIO.read(new File(Octave.IMGROOT+cmask));
+			if(img==null){
+				throw new IOException("Sprite");
+			}
+			if(mask==null){
+				throw new IOException("Mask");
+			}
         }
-        catch(IOException e){}
+        catch(IOException e){
+			System.out.println("Resource not found.");
+			System.exit(0);
+		}
+        mx=maskx;
+        my=masky;
         w=cols;
         h=rows;
         frames=new BufferedImage[w*h];
         imgspeed=ispeed;
         //frame width and height
-        int fw=(img.getWidth()-hoff)/cols-hsep;
-        int fh=(img.getHeight()-voff)/rows-vsep;
+        tw=(img.getWidth()-hoff)/cols-hsep;
+        th=(img.getHeight()-voff)/rows-vsep;
         for(int i=0;i<rows;++i){
             for(int j=0;j<cols;++j){
-                frames[w*i+j]=img.getSubimage(hoff+j*fw,voff+i*fh,fw,fh);
+                frames[w*i+j]=img.getSubimage(hoff+j*tw,voff+i*th,tw,th);
             }
         }
     }
     
-    MapEntity(String url,int cols,int rows,int ispeed){
-        this(url,cols,rows,ispeed,0,0,0,0);
+    MapEntity(String sprite,String mask,int mx,int my,int cols,int rows,int ispeed){
+        this(sprite,mask,mx,my,cols,rows,ispeed,0,0,0,0);
     }
     
     /**
@@ -120,6 +158,7 @@ public class MapEntity{
             frame%=w;
             imgcount=0;
         }
+        g.drawImage(mask, x+mx, y+my, o);
     }
     
     /**
@@ -132,4 +171,16 @@ public class MapEntity{
         frame=0;
         imgcount=0;
     }
+	
+	/**
+	 * Overloadable method called during a step event.
+	**/
+	void step(){}
+	
+	/**
+	 * Overloadable method called when entity collides with another.
+	 * 
+	 * @param other The other entity involved in the collision.
+	 */
+	void collide(MapEntity other){}
 }
