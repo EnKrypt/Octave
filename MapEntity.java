@@ -31,7 +31,7 @@ public class MapEntity{
     /**
      * A list of the entity's sprite frames.
     **/
-    BufferedImage frames[];
+    BufferedImage frames[][];
 	
 	/**
 	 * The entity's collision mask.
@@ -79,6 +79,16 @@ public class MapEntity{
     int y;
     
     /**
+     * The last x value.
+     */
+    int prevx;
+    
+    /**
+     * The last y value.
+     */
+    int prevy;
+    
+    /**
      * The width of a frame.
      */
     int fw;
@@ -108,7 +118,7 @@ public class MapEntity{
      * @param hoff The horizontal offset of the upper left frame.
      * @param voff The vertical offset of the upper left frame.
     **/
-    MapEntity(String sprite,String cmask,int maskx,int masky,int cols,int rows,int ispeed,int hsep,int vsep,int hoff,int voff){
+    MapEntity(String sprite,String cmask,int maskx,int masky,int cols,int rows,int hsep,int vsep,int hoff,int voff){
         BufferedImage img=null;
         try{
             img=ImageIO.read(new File(Octave.IMGROOT+sprite));
@@ -128,29 +138,28 @@ public class MapEntity{
         my=masky;
         w=cols;
         h=rows;
-        frames=new BufferedImage[w*h];
-        imgspeed=ispeed;
+        frames=new BufferedImage[h][w];
         //frame width and height
         int fw=(img.getWidth()-hoff)/cols-hsep;
         int fh=(img.getHeight()-voff)/rows-vsep;
-        for(int i=0;i<rows;++i){
-            for(int j=0;j<cols;++j){
-                frames[w*i+j]=img.getSubimage(hoff+j*(fw+hsep),voff+i*(fh+vsep),fw,fh);
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                frames[i][j]=img.getSubimage(hoff+j*(fw+hsep),voff+i*(fh+vsep),fw,fh);
             }
         }
     }
     
-    MapEntity(String sprite,String mask,int mx,int my,int cols,int rows,int ispeed){
-        this(sprite,mask,mx,my,cols,rows,ispeed,0,0,0,0);
+    MapEntity(String sprite,String mask,int mx,int my,int cols,int rows){
+        this(sprite,mask,mx,my,cols,rows,0,0,0,0);
     }
     
     /**
-     * Draw the entity to the grapic.
+     * Draw the entity to the graphic.
      *
      * @param g The graphic to which the entity should be drawn.
     **/
     void draw(Graphics g,ImageObserver o){
-        g.drawImage(frames[mode*w+frame],x,y,o);
+        g.drawImage(frames[mode][frame],x,y,o);
         //Update the imgcount/frame
         imgcount+=imgspeed;
         if(imgcount>=Octave.FPS){

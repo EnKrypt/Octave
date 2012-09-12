@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=
-comment0.target=Map()
-comment1.params=g
-comment1.target=void\ paintComponent(java.awt.Graphics)
-comment2.params=e
-comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
-numComments=3

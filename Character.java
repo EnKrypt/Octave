@@ -72,18 +72,6 @@ public class Character extends MapEntity implements KeyListener{
      * The constant representing a direction going up and right.
     **/
     public static final int UPRIGHT=7;
-    
-    public static final double SQRT3=Math.sqrt(3.0);
-    
-    /**
-     * The last x value.
-     */
-    int prevx;
-    
-    /**
-     * The last y value.
-     */
-    int prevy;
 
     /**
      * The speed of the character in any direction (used to calculate movement).
@@ -107,25 +95,26 @@ public class Character extends MapEntity implements KeyListener{
     boolean[] keys=new boolean[4];
     
     public Character(){
-        super("character.png","character_mask.png",6,26,6,8,0,0,0,0,0);
+        super("character.png","character_mask.png",6,26,6,8,0,0,0,0);
     }
     
     public void step(){
     	prevx=x;
     	prevy=y;
         switch(direction){
-        	//*SQRT3 to accommodate only one component being changed
+        	//2* to accommodate only one component being changed
+        	//Sqrt of 3 is double. Multiplying a double with an integer will truncate the decimal anyway.
         	case DOWN:
-        		y+=speed*SQRT3;
+        		y+=speed*2;
         		break;
         	case LEFT:
-        		x-=speed*SQRT3;
+        		x-=speed*2;
         		break;
         	case RIGHT:
-        		x+=speed*SQRT3;
+        		x+=speed*2;
         		break;
         	case UP:
-        		y-=speed*SQRT3;
+        		y-=speed*2;
         		break;
             case UPRIGHT:
                 x+=2*speed;

@@ -82,6 +82,5 @@ public class Octave extends JFrame implements ActionListener{
    
     public void actionPerformed(ActionEvent e){
 		map.step();
-        step.start();
 	}
 }

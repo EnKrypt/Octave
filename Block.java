@@ -24,7 +24,7 @@ Please note that in the event that any source file or other resource in this pro
  */
 public class Block extends MapEntity{
 	Block(String sprite,int x,int y){
-		super(sprite,"block_mask.png",0,9,1,1,0);
+		super(sprite,"block_mask.png",0,9,1,1);
 		this.x=x;
 		this.y=y;
 	}
