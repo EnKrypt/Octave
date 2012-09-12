@@ -20,6 +20,7 @@ Please note that in the event that any source file or other resource in this pro
 import java.awt.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Implements the game's map
@@ -32,7 +33,7 @@ public class Map extends JPanel{
     /**
      * The player's character instance.
      *
-     * @see com.octave.game.Character
+     * @see Character
     **/
     Character player;
 	
@@ -47,6 +48,7 @@ public class Map extends JPanel{
 		entities=new ArrayList<MapEntity>(1);
 		add(player);
 		add(new Block("whitebox.png",160,160));
+		add(new Block("whitebox.png",169,174));
         setFocusable(true);
     }
 
@@ -63,6 +65,7 @@ public class Map extends JPanel{
 	**/
 	public void step(){
 		MapEntity o1,o2;
+		Collections.sort(entities,new RenderOrder());
 		for(int i=0;i<entities.size();++i){
 			o1=entities.get(i);
 			o1.step();

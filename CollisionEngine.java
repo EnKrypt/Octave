@@ -33,8 +33,8 @@ public class CollisionEngine{
 	 * @return True if they're intersecting, false otherwise.
 	 */
 	public static boolean bounds_collision(MapEntity o1,MapEntity o2){
-		return new Rectangle(o1.x+o1.mx,o1.y+o1.my,o1.tw,o1.th).intersects(
-			new Rectangle(o2.x+o2.mx,o2.y+o2.my,o2.tw,o2.th)
+		return new Rectangle(o1.x+o1.mx,o1.y+o1.my,o1.mask.getWidth(),o1.mask.getHeight()).intersects(
+			new Rectangle(o2.x+o2.mx,o2.y+o2.my,o2.mask.getWidth(),o2.mask.getHeight())
 		);
 	}
 	
@@ -54,8 +54,6 @@ public class CollisionEngine{
 		);
 		for(int y=0;y<r.height;++y){
 			for(int x=0;x<r.width;++x){
-				System.out.println((r.x+x-o1.x-o1.mx)+" "+(r.y+y-o1.y-o1.my));
-				System.out.println((r.x+x-o2.x-o2.mx)+" "+(r.y+y-o2.y-o2.my));
 				//shift to get alpha value
 				//if neither bit is transparent at that position, it must be a collision.
 				if(o1.mask.getRGB(r.x+x-o1.x-o1.mx,r.y+y-o1.y-o1.my)>>>24!=0 &&

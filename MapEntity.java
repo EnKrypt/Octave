@@ -49,16 +49,6 @@ public class MapEntity{
     int h;
     
     /**
-     * The width of a tile.
-     */
-    int tw;
-    
-    /**
-     * The height of a tile.
-     */
-    int th;
-    
-    /**
      * The speed at which the entity's sprite updates.
     **/
     int imgspeed;
@@ -87,6 +77,16 @@ public class MapEntity{
      * The y component of the entity's position.
     **/
     int y;
+    
+    /**
+     * The width of a frame.
+     */
+    int fw;
+    
+    /**
+     * The height of a frame.
+     */
+    int fh;
     
     /**
      * The mask's horizontal offset from the entity's x position component.
@@ -131,11 +131,11 @@ public class MapEntity{
         frames=new BufferedImage[w*h];
         imgspeed=ispeed;
         //frame width and height
-        tw=(img.getWidth()-hoff)/cols-hsep;
-        th=(img.getHeight()-voff)/rows-vsep;
+        int fw=(img.getWidth()-hoff)/cols-hsep;
+        int fh=(img.getHeight()-voff)/rows-vsep;
         for(int i=0;i<rows;++i){
             for(int j=0;j<cols;++j){
-                frames[w*i+j]=img.getSubimage(hoff+j*tw,voff+i*th,tw,th);
+                frames[w*i+j]=img.getSubimage(hoff+j*fw,voff+i*fh,fw,fh);
             }
         }
     }
@@ -158,7 +158,6 @@ public class MapEntity{
             frame%=w;
             imgcount=0;
         }
-        g.drawImage(mask, x+mx, y+my, o);
     }
     
     /**

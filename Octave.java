@@ -56,7 +56,7 @@ public class Octave extends JFrame implements ActionListener{
 	/**
 	 * The game's map controller instance.
 	 *
-	 * @see com.octave.game.Map
+	 * @see Map
 	**/
 	Map map;
     

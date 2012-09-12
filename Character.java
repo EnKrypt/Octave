@@ -72,9 +72,6 @@ public class Character extends MapEntity implements KeyListener{
     **/
     int direction;
     
-    /**
-     * @param url The "URL" (or local file) of the character's sprite.
-    **/
     public Character(){
         super("character.png","character_mask.png",4,25,3,4,0);
     }
