@@ -135,7 +135,7 @@ public class MapEntity{
         int fh=(img.getHeight()-voff)/rows-vsep;
         for(int i=0;i<rows;++i){
             for(int j=0;j<cols;++j){
-                frames[w*i+j]=img.getSubimage(hoff+j*fw,voff+i*fh,fw,fh);
+                frames[w*i+j]=img.getSubimage(hoff+j*(fw+hsep),voff+i*(fh+vsep),fw,fh);
             }
         }
     }

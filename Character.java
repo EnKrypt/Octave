@@ -28,25 +28,52 @@ public class Character extends MapEntity implements KeyListener{
 	**/
 	public static final int WALKSPEED=8;
 	
-    /**
-     * The constant representing a direction going up and right.
-    **/
-    public static final int UPRIGHT=0;
+	/**
+	 * No direction
+	 */
+	public static final int NODIR=-1;
+	
+	/**
+	 * The constant representing down.
+	 */
+	public static final int DOWN=0;
+	
+	/**
+	 * The constant representing left.
+	 */
+	public static final int LEFT=1;
+	
+	/**
+	 * The constant representing right.
+	 */
+	public static final int RIGHT=2;
+	
+	/**
+	 * The constant representing up.
+	 */
+	public static final int UP=3;
 
     /**
      * The constant representing a direction going down and right.
     **/
-    public static final int DOWNRIGHT=1;
+    public static final int DOWNRIGHT=4;
 
     /**
      * The constant representing a direction going down and left.
     **/
-    public static final int DOWNLEFT=2;
+    public static final int DOWNLEFT=5;
 
     /**
      * The constant representing a direction going up and left.
     **/
-    public static final int UPLEFT=3;
+    public static final int UPLEFT=6;
+	
+    /**
+     * The constant representing a direction going up and right.
+    **/
+    public static final int UPRIGHT=7;
+    
+    public static final double SQRT3=Math.sqrt(3.0);
     
     /**
      * The last x value.
@@ -72,14 +99,34 @@ public class Character extends MapEntity implements KeyListener{
     **/
     int direction;
     
+    /**
+     * Key values (used to calculate direction).
+     * 
+     * left right up down
+     */
+    boolean[] keys=new boolean[4];
+    
     public Character(){
-        super("character.png","character_mask.png",4,25,3,4,0);
+        super("character.png","character_mask.png",6,26,6,8,0,0,0,0,0);
     }
     
     public void step(){
     	prevx=x;
     	prevy=y;
         switch(direction){
+        	//*SQRT3 to accommodate only one component being changed
+        	case DOWN:
+        		y+=speed*SQRT3;
+        		break;
+        	case LEFT:
+        		x-=speed*SQRT3;
+        		break;
+        	case RIGHT:
+        		x+=speed*SQRT3;
+        		break;
+        	case UP:
+        		y-=speed*SQRT3;
+        		break;
             case UPRIGHT:
                 x+=2*speed;
                 y-=speed;
@@ -105,63 +152,96 @@ public class Character extends MapEntity implements KeyListener{
      * @param d The new direction.
     **/
     public void goDirection(int d){
-        direction=d;
-        speed=2;
-        imgspeed=WALKSPEED;
-        setMode(d);
+    	if(d==NODIR){
+    		speed=0;
+    		imgspeed=0;
+    		frame=4;
+    	}
+    	else{
+	        direction=d;
+	        speed=2;
+	        imgspeed=WALKSPEED;
+	        setMode(d);
+    	}
     }
     
     /**
-     * Stop moving in a given direction.
-     * 
-     * @param d The direction
-    **/
-    public void ungoDirection(int d){
-        if(direction==d){
-           	speed=0;
-            imgspeed=0;
-            frame=1;
+     * Calculates the direction to go in.
+     */
+    int getDirection(){
+        int h=(keys[1]?1:0)-(keys[0]?1:0);
+        int v=(keys[3]?1:0)-(keys[2]?1:0);
+        if(h==0 && v==0){
+        	return NODIR;
         }
+        if(h==0 && v<0){
+        	return UP;
+        }
+        else if(h>0 && v<0){
+        	return UPRIGHT;
+        }
+        else if(h>0 && v==0){
+        	return RIGHT;
+        }
+        else if(h>0 && v>0){
+        	return DOWNRIGHT;
+        }
+        else if(h==0 && v>0){
+        	return DOWN;
+        }
+        else if(h<0 && v>0){
+        	return DOWNLEFT;
+        }
+        else if(h<0 && v==0){
+        	return LEFT;
+        }
+        else if(h<0 && v<0){
+        	return UPLEFT;
+        }
+        return NODIR;
     }
     
     public void keyTyped(KeyEvent e){}
 
     public void keyPressed(KeyEvent e){
+    	//horizontal and vertical
         switch(e.getKeyCode()){
             case KeyEvent.VK_LEFT:
-                goDirection(Character.UPLEFT);
+            	keys[0]=true;
                 break;
             case KeyEvent.VK_UP:
-                goDirection(Character.UPRIGHT);
+            	keys[2]=true;
                 break;
             case KeyEvent.VK_RIGHT:
-                goDirection(Character.DOWNRIGHT);
+            	keys[1]=true;
                 break;
             case KeyEvent.VK_DOWN:
-                goDirection(Character.DOWNLEFT);
+            	keys[3]=true;
                 break;
             default:
                 return;
         }
+        goDirection(getDirection());
     }
 
     public void keyReleased(KeyEvent e){
         switch(e.getKeyCode()){
-            case KeyEvent.VK_LEFT:
-            	ungoDirection(Character.UPLEFT);
-                break;
-            case KeyEvent.VK_UP:
-            	ungoDirection(Character.UPRIGHT);
-                break;
-            case KeyEvent.VK_RIGHT:
-            	ungoDirection(Character.DOWNRIGHT);
-                break;
-            case KeyEvent.VK_DOWN:
-            	ungoDirection(Character.DOWNLEFT);
-                break;
+	        case KeyEvent.VK_LEFT:
+	        	keys[0]=false;
+	            break;
+	        case KeyEvent.VK_UP:
+	        	keys[2]=false;
+	            break;
+	        case KeyEvent.VK_RIGHT:
+	        	keys[1]=false;
+	            break;
+	        case KeyEvent.VK_DOWN:
+	        	keys[3]=false;
+	            break;
             default:
                 return;
         }
+        goDirection(getDirection());
     }
     
     public void collide(MapEntity other){
