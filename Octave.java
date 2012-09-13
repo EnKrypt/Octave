@@ -37,6 +37,16 @@ public class Octave extends JFrame implements ActionListener{
 	 * To make Eclipse shut up
 	 */
 	static final long serialVersionUID=1000;
+	
+	/**
+	 * The game instance.
+	 */
+	public static Octave game;
+	
+	/**
+	 * How much to scale certain objects
+	 */
+	public static final int SCALE=2;
 
 	/**
 	 * The Frames Per Second of the game.
@@ -66,18 +76,19 @@ public class Octave extends JFrame implements ActionListener{
     Timer step;
 
 	public Octave(){
-		JFrame frame=new JFrame("Octave - v1.1.0 Alpha");
-		frame.setSize(500,500);
+		super("Octave - v1.1.0 Alpha");
+		game=this;
+		setSize(500,500);
 		map=new Map();
-		frame.setContentPane(map);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(map);
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         step=new Timer(DELAY,this);
+		game.step.start();
 	}
 
 	public static void main(String args[]){
-		Octave octave=new Octave();
-		octave.step.start();
+		game=new Octave();
 	}
    
     public void actionPerformed(ActionEvent e){

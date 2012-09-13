@@ -94,8 +94,10 @@ public class Character extends MapEntity implements KeyListener{
      */
     boolean[] keys=new boolean[4];
     
-    public Character(){
-        super("character.png","character_mask.png",6,26,6,8,0,0,0,0);
+    public Character(int x,int y){
+        super("character.png","character_mask.png",Octave.SCALE,6,26,6,8,0,0,0,0);
+        this.x=x;
+        this.y=y;
     }
     
     public void step(){

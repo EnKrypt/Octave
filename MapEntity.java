@@ -3,7 +3,7 @@ Copyright (C) 2012 Arvind Kumar
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
+the Free Software Foundation,either version 3 of the License,or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
@@ -12,16 +12,15 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>
+along with this program.  If not,see <http://www.gnu.org/licenses/>
 
-Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
+Please note that in the event that any source file or other resource in this project does not include the above header,it should be assumed to be under the same license.
 */
 
- import java.awt.image.BufferedImage;
- import java.awt.image.ImageObserver;
+ import java.awt.image.*;
  import javax.imageio.ImageIO;
  import java.io.IOException;
- import java.awt.Graphics;
+ import java.awt.*;
  import java.io.File;
 
 /**
@@ -109,7 +108,26 @@ public class MapEntity{
     int my;
     
     /**
+     * Private helper function that scales a BufferedImage.
+     * 
+     * @param img The image to scale.
+     * @param zoom The amount by which to scale the image.
+     * @return The scaled image.
+     */
+    BufferedImage scaleImage(BufferedImage img,int zoom){
+    	int w=img.getWidth()*zoom;
+    	int h=img.getHeight()*zoom;
+    	BufferedImage resized=new BufferedImage(w,h,img.getType());
+        Graphics2D g=resized.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        g.drawImage(img,0,0,w,h,0,0,img.getWidth(),img.getHeight(),null);
+        g.dispose();
+        return resized;
+    }
+    
+    /**
      * @param sprite The path to the entity's spritesheet.
+     * @param zoom How much the entity should be scaled.
 	 * @param cmask The path to the entity's collision mask.
      * @param cols The number of image columns used in the sprite (used to implement animation).
      * @param rows The number of image rows used in the sprite (used to implement animation).
@@ -118,7 +136,7 @@ public class MapEntity{
      * @param hoff The horizontal offset of the upper left frame.
      * @param voff The vertical offset of the upper left frame.
     **/
-    MapEntity(String sprite,String cmask,int maskx,int masky,int cols,int rows,int hsep,int vsep,int hoff,int voff){
+    MapEntity(String sprite,String cmask,int zoom,int maskx,int masky,int cols,int rows,int hsep,int vsep,int hoff,int voff){
         BufferedImage img=null;
         try{
             img=ImageIO.read(new File(Octave.IMGROOT+sprite));
@@ -134,11 +152,19 @@ public class MapEntity{
 			System.out.println("Resource not found.");
 			System.exit(0);
 		}
-        mx=maskx;
-        my=masky;
+        img=scaleImage(img,zoom);
+        mask=scaleImage(mask,zoom);
+        //member setting
+        mx=maskx*zoom;
+        my=masky*zoom;
         w=cols;
         h=rows;
         frames=new BufferedImage[h][w];
+        //local zooming
+        hsep*=zoom;
+        vsep*=zoom;
+        hoff*=zoom;
+        voff*=zoom;
         //frame width and height
         int fw=(img.getWidth()-hoff)/cols-hsep;
         int fh=(img.getHeight()-voff)/rows-vsep;
@@ -149,8 +175,8 @@ public class MapEntity{
         }
     }
     
-    MapEntity(String sprite,String mask,int mx,int my,int cols,int rows){
-        this(sprite,mask,mx,my,cols,rows,0,0,0,0);
+    MapEntity(String sprite,String mask,int zoom,int mx,int my,int cols,int rows){
+        this(sprite,mask,zoom,mx,my,cols,rows,0,0,0,0);
     }
     
     /**
@@ -167,6 +193,7 @@ public class MapEntity{
             frame%=w;
             imgcount=0;
         }
+        //g.drawImage(mask,x+mx,y+my,o);
     }
     
     /**

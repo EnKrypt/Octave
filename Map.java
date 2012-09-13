@@ -43,12 +43,27 @@ public class Map extends JPanel{
 	ArrayList<MapEntity> entities;
 
     public Map(){
-        player=new Character();
-        addKeyListener(player);
 		entities=new ArrayList<MapEntity>(1);
-		add(player);
-		add(new Block("whitebox.png",160,160));
         setFocusable(true);
+        loadPlayground();
+    }
+    
+    public void loadPlayground(){
+    	Octave.game.setSize(480,270);
+        player=new Character(120,90);
+        addKeyListener(player);
+		add(player);
+    	int s=13;
+    	int wh=18;
+    	add(new Block("whitebox.png",240-18,0));
+    	for(int i=0;i<s;++i){
+    		add(new Block("whitebox.png",240-wh-i*16,i*8));
+    		add(new Block("whitebox.png",240-wh+i*16,i*8));
+    	}
+    	for(int i=1;i<s;++i){
+    		add(new Block("whitebox.png",i*16-3,8*s+i*8-8));
+    		add(new Block("whitebox.png",480-i*16-65,8*s+i*8-8));
+    	}
     }
 
     public void paintComponent(Graphics g){
