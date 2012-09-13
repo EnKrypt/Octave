@@ -16,6 +16,8 @@ The todo list should be ordered by priority.
  * Added Tile class
  * Added a rug tile to the playground
  * Added a hello world tile to the playground (prints Hello World when you step on it)
+ * Made Character solid
+ * Removed drawing in scaleImage()
 
 TODO:
  * Create a map editor (this should be very high priority)
