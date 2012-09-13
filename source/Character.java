@@ -100,6 +100,7 @@ public class Character extends MapEntity implements KeyListener{
         super("character.png","character_mask.png",Octave.SCALE,9,26,6,8,0,0,0,0);
         this.x=x;
         this.y=y;
+		solid=true;
     }
     
     public void step(){

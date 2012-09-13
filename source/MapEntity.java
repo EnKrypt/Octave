@@ -127,7 +127,6 @@ public class MapEntity{
     	BufferedImage resized=new BufferedImage(w,h,img.getType());
         Graphics2D g=resized.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-		g.drawImage(img,0,0,w,h,0,0,img.getWidth(),img.getHeight(),null);
         g.dispose();
         return resized;
     }
