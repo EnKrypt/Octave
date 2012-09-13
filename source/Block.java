@@ -17,14 +17,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
 */
 
-import java.util.Comparator;
+package source;
 
 /**
- * Sorts entities by y value for rendering order.
+ * A general-purpose implementation of a block entity.
+ * 
+ * Suggestion: Subclass into specific block types?
  */
-public class RenderOrder implements Comparator<MapEntity>{
-	@Override
-	public int compare(MapEntity o1,MapEntity o2){
-		return (o1.y+o1.my)-(o2.y+o2.my);
+public class Block extends MapEntity{
+	Block(String sprite,int x,int y){
+		super(sprite,"block_mask.png",Octave.SCALE,0,9,1,1);
+		this.x=x;
+		this.y=y;
+		solid=true;
 	}
 }

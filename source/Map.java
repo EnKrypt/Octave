@@ -17,8 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
 */
 
+package source;
+
 import java.awt.*;
 import javax.swing.*;
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -64,6 +68,16 @@ public class Map extends JPanel{
     		add(new Block("whitebox.png",i*16-3,8*s+i*8-8));
     		add(new Block("whitebox.png",480-i*16-65,8*s+i*8-8));
     	}
+    	add(new MapEntity("tree1.png","tree1_mask.png",Octave.SCALE,21,55,1,1,0,0,0,0),480/2-61,270/2-81).solid=true;
+    	add(new MapEntity("rock1.png","rock1_mask.png",Octave.SCALE,0,14,1,1,0,0,0,0),240-33,16).solid=true;
+    	add(new Tile("rug.png"),60,270/2-17);
+    	add(new Tile("helloworld.png"){
+    		void collide(MapEntity other){
+    			if(other==player){
+    				System.out.println("Hello world!");
+    			}
+    		}
+    	},320,270/2-32);
     }
 
     public void paintComponent(Graphics g){
@@ -99,8 +113,25 @@ public class Map extends JPanel{
 	 * Add an entity to the map.
 	 * 
 	 * @param e The MapEntity to add.
+	 * @return The entity added.
 	 */
-	public void add(MapEntity e){
+	public MapEntity add(MapEntity e){
 		entities.add(e);
+		return e;
+	}
+	
+	/**
+	 * Add an entity to the map at a location.
+	 * 
+	 * @param e The MapEntity to add.
+	 * @param x The x position component.
+	 * @param y The y position component.
+	 * @return The entity added.
+	 */
+	public MapEntity add(MapEntity e,int x,int y){
+		entities.add(e);
+		e.x=x;
+		e.y=y;
+		return e;
 	}
 }

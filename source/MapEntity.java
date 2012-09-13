@@ -1,3 +1,4 @@
+package source;
 /*
 Copyright (C) 2012 Arvind Kumar
 
@@ -17,11 +18,12 @@ along with this program.  If not,see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header,it should be assumed to be under the same license.
 */
 
- import java.awt.image.*;
- import javax.imageio.ImageIO;
- import java.io.IOException;
- import java.awt.*;
- import java.io.File;
+ 
+import java.awt.image.*;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.*;
+import java.io.File;
 
 /**
  * Superclass of any object that the player can interact with on the screen.
@@ -106,6 +108,11 @@ public class MapEntity{
      * The mask's vertical offset from the entity's y position component.
      */
     int my;
+    
+    /**
+     * Whether or not the entity is solid.
+     */
+    boolean solid;
     
     /**
      * Private helper function that scales a BufferedImage.

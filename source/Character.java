@@ -17,7 +17,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
 */
 
- import java.awt.event.*;
+package source; 
+
+import java.awt.event.*;
 
 /**
  * Implements the player's avatar.
@@ -80,10 +82,10 @@ public class Character extends MapEntity implements KeyListener{
 
     /**
      * The direction of the character
-     * @see com.octave.game.Character.UPRIGHT
-     * @see com.octave.game.Character.DOWNRIGHT
-     * @see com.octave.game.Character.DOWNLEFT
-     * @see com.octave.game.Character.UPLEFT
+     * @see source.Character.UPRIGHT
+     * @see source.Character.DOWNRIGHT
+     * @see source.Character.DOWNLEFT
+     * @see source.Character.UPLEFT
     **/
     int direction;
     
@@ -95,7 +97,7 @@ public class Character extends MapEntity implements KeyListener{
     boolean[] keys=new boolean[4];
     
     public Character(int x,int y){
-        super("character.png","character_mask.png",Octave.SCALE,6,26,6,8,0,0,0,0);
+        super("character.png","character_mask.png",Octave.SCALE,9,26,6,8,0,0,0,0);
         this.x=x;
         this.y=y;
     }
@@ -236,7 +238,7 @@ public class Character extends MapEntity implements KeyListener{
     }
     
     public void collide(MapEntity other){
-    	if(other instanceof Block){
+    	if(other.solid){
     		//Reset location (should resolve collision)
     		x=prevx;
     		y=prevy;

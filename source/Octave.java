@@ -24,8 +24,11 @@ Please note that in the event that any source file or other resource in this pro
  * This is the entry point for Octave.
 **/
  
+package source;
+
 import java.awt.event.*;
 import javax.swing.*;
+
 
 /**
  * Main class for Octave

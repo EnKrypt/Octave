@@ -1,0 +1,13 @@
+Changelog started 9/13/2012
+
+ * Created a playground by enclosing an area with walls
+ * Added a solid attribute to MapEntity
+ * Added tree and rock solid entities to the playground
+ * Added Tile class
+ * Added a rug tile to the playground
+ * Added a hello world tile to the playground (prints Hello World when you step on it)
+
+TODO:
+ * Create a map editor (this should be very high priority)
+ * Fix the sprite-sliding glitch (walking in any direction for a second stops the animation, making the sprite look like it's sliding)
+ 
