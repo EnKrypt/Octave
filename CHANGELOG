@@ -1,5 +1,15 @@
-Changelog started 9/13/2012
+Changelog started 13/09/2012
 
+Format:
+Head each day with dd/mm/yyyy
+As you program, each minor change you make should have a bullet created in the changelog.
+When you're finished programming, append a todo list consisting of the things the next programmer should do, including suggested features (if relevant).
+
+The log and todo list should be separated by an empty line, and all bullets should have 2*level+1 spaces preceding it, where level is the bullet level starting at 0. Bullets should alternate between * and - with each level.
+
+The todo list should be ordered by priority.
+
+13/09/2012
  * Created a playground by enclosing an area with walls
  * Added a solid attribute to MapEntity
  * Added tree and rock solid entities to the playground
@@ -9,5 +19,19 @@ Changelog started 9/13/2012
 
 TODO:
  * Create a map editor (this should be very high priority)
+   - Snap grids
+     * Objects placed should snap to the nearest intersection of the grid
+	 * Objects should snap by their collision mask
+	 * Grids' cell global widths and heights should be adjustable (aka a 16x16 pixel/cell grid should be able to become a 32x32 pixel/cell grid)
+     * Cartesian (standard up-down left-right)
+	 * Isometric (diagonal, lines with slopes of 1/2 and -1/2)
+	 * Unordered (no snap grid)
+   - Object library
+     * Library of preloaded object/tile definitions (objects and tiles may have separate libraries)
+   - Ability to delete objects already placed
+   - Ability to manually adjust some attributes of individual objects (e.g. x and y values)
+   - Export to a file (programming routines to read from the file should come later)
+ * Map loading routine
  * Fix the sprite-sliding glitch (walking in any direction for a second stops the animation, making the sprite look like it's sliding)
- 
+
+14/09/2012
