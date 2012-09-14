@@ -48,20 +48,21 @@ public class Map extends JPanel{
     }
     
     public void loadPlayground(){
-    	Octave.game.setSize(480,270);
+    	Octave.game.setSize(480,300);
         player=new Character(120,90);
         addKeyListener(player);
 		add(player);
     	int s=13;
     	int wh=18;
-    	add(new Block("whitebox.png",240-18,0));
+    	add(new Block("bluebox.png",240-18,0));
+		add(new Block("greenbox.png",206,200));
     	for(int i=0;i<s;++i){
-    		add(new Block("whitebox.png",240-wh-i*16,i*8));
+    		add(new Block("bluebox.png",240-wh-i*16,i*8));
     		add(new Block("whitebox.png",240-wh+i*16,i*8));
     	}
     	for(int i=1;i<s;++i){
-    		add(new Block("whitebox.png",i*16-3,8*s+i*8-8));
-    		add(new Block("whitebox.png",480-i*16-65,8*s+i*8-8));
+    		add(new Block("redbox.png",i*16-3,8*s+i*8-8));
+    		add(new Block("greenbox.png",480-i*16-65,8*s+i*8-8));
     	}
     	add(new MapEntity(new Sprite("tree1.png"),"tree1_mask.png",21,55),480/2-61,270/2-81).solid=true;
     	add(new MapEntity(new Sprite("rock1.png"),"rock1_mask.png",0,14),240-33,16).solid=true;

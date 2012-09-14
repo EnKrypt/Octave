@@ -28,6 +28,7 @@ package source;
 
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.File;
 
 
 /**
@@ -61,7 +62,7 @@ public class Octave extends JFrame implements ActionListener{
 	/**
 	 * The root folder of the image resources
 	**/
-	public static final String IMGROOT="resources/images/";
+	public static final String IMGROOT="resources"+File.pathSeparator+"images"+File.pathSeparator;
 
 	/**
 	 * The game's map controller instance.
@@ -88,8 +89,7 @@ public class Octave extends JFrame implements ActionListener{
 	}
 
 	public static void main(String args[]){
-		MapEditor me=new MapEditor();
-		/*game=new Octave();*/
+		game=new Octave();
 	}
    
     public void actionPerformed(ActionEvent e){

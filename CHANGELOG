@@ -41,3 +41,6 @@ TODO:
  * Consolidated sprite functions into Sprite
  * Fixed bugs related to Sprite
  * Created MapEditor
+ * Fixed Path problem using File.pathSeparator to work for path formats irrespective of Operating system
+ * Created more cubes in different colors
+ * Modified playground to implement color cubes
