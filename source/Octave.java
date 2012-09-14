@@ -88,7 +88,8 @@ public class Octave extends JFrame implements ActionListener{
 	}
 
 	public static void main(String args[]){
-		game=new Octave();
+		MapEditor me=new MapEditor();
+		/*game=new Octave();*/
 	}
    
     public void actionPerformed(ActionEvent e){

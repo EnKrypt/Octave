@@ -37,3 +37,7 @@ TODO:
  * Fix the sprite-sliding glitch (walking in any direction for a second stops the animation, making the sprite look like it's sliding)
 
 14/09/2012
+ * Renamed Tile to TileEntity
+ * Consolidated sprite functions into Sprite
+ * Fixed bugs related to Sprite
+ * Created MapEditor
