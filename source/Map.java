@@ -37,6 +37,11 @@ public class Map extends JPanel{
     Character player;
 	
 	/**
+	 * The convobox instance.
+	**/
+	Convobox cbox;
+	
+	/**
 	 * A list of entities to render to the map.
 	**/
 	ArrayList<MapEntity> entities;
@@ -48,8 +53,9 @@ public class Map extends JPanel{
     }
     
     public void loadPlayground(){
-    	Octave.game.setSize(480,300);
+    	Octave.game.setSize(480,400);
         player=new Character(120,90);
+		cbox=new Convobox(Color.YELLOW,Color.BLACK,0,250,463,110);
         addKeyListener(player);
 		add(player);
     	int s=13;
@@ -74,14 +80,16 @@ public class Map extends JPanel{
     			}
     		}
     	},320,270/2-32);
+		cbox.say("Octave loaded",20);
     }
 
     public void paintComponent(Graphics g){
         g.setColor(Color.WHITE);
-        g.fillRect(0,0,500,500);
+        g.fillRect(0,0,500,300);
 		for(MapEntity entity:entities){
 			entity.draw(g,this);
 		}
+		cbox.draw(g);
     }
     
 	/**

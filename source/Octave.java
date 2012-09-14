@@ -62,7 +62,8 @@ public class Octave extends JFrame implements ActionListener{
 	/**
 	 * The root folder of the image resources
 	**/
-	public static final String IMGROOT="resources"+File.pathSeparator+"images"+File.pathSeparator;
+	//public static final String IMGROOT="resources"+File.pathSeparator+"images"+File.pathSeparator;
+	public static final String IMGROOT="resources//images//";
 
 	/**
 	 * The game's map controller instance.

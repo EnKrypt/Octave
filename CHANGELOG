@@ -44,3 +44,5 @@ TODO:
  * Fixed Path problem using File.pathSeparator to work for path formats irrespective of Operating system
  * Created more cubes in different colors
  * Modified playground to implement color cubes
+ * Added the Convobox class
+ * Refined the Convobox element to make it work.
