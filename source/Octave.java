@@ -36,9 +36,6 @@ import javax.swing.*;
  * It contains the entry point, {@link #main(String[])}
 **/
 public class Octave extends JFrame implements ActionListener{
-	/**
-	 * To make Eclipse shut up
-	 */
 	static final long serialVersionUID=1000;
 	
 	/**

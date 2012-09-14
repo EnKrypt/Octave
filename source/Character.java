@@ -97,10 +97,11 @@ public class Character extends MapEntity implements KeyListener{
     boolean[] keys=new boolean[4];
     
     public Character(int x,int y){
-        super("character.png","character_mask.png",Octave.SCALE,9,26,6,8,0,0,0,0);
+        super(new Sprite("character.png",3,8),"character_mask.png",9,26);
         this.x=x;
         this.y=y;
 		solid=true;
+		sprite.setFrame(1);
     }
     
     public void step(){
@@ -108,7 +109,6 @@ public class Character extends MapEntity implements KeyListener{
     	prevy=y;
         switch(direction){
         	//2* to accommodate only one component being changed
-        	//Sqrt of 3 is double. Multiplying a double with an integer will truncate the decimal anyway.
         	case DOWN:
         		y+=speed*2;
         		break;
@@ -148,14 +148,14 @@ public class Character extends MapEntity implements KeyListener{
     public void goDirection(int d){
     	if(d==NODIR){
     		speed=0;
-    		imgspeed=0;
-    		frame=4;
+    		sprite.setSpeed(0);
+    		sprite.setFrame(1);
     	}
     	else{
 	        direction=d;
 	        speed=2;
-	        imgspeed=WALKSPEED;
-	        setMode(d);
+	        sprite.setSpeed(WALKSPEED);
+	        sprite.setMode(d);
     	}
     }
     

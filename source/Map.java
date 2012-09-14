@@ -21,8 +21,6 @@ package source;
 
 import java.awt.*;
 import javax.swing.*;
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -30,9 +28,6 @@ import java.util.Collections;
  * Implements the game's map
 **/
 public class Map extends JPanel{
-	/**
-	 * To make Eclipse shut up.
-	 */
 	static final long serialVersionUID=1001;
     /**
      * The player's character instance.
@@ -68,10 +63,10 @@ public class Map extends JPanel{
     		add(new Block("whitebox.png",i*16-3,8*s+i*8-8));
     		add(new Block("whitebox.png",480-i*16-65,8*s+i*8-8));
     	}
-    	add(new MapEntity("tree1.png","tree1_mask.png",Octave.SCALE,21,55,1,1,0,0,0,0),480/2-61,270/2-81).solid=true;
-    	add(new MapEntity("rock1.png","rock1_mask.png",Octave.SCALE,0,14,1,1,0,0,0,0),240-33,16).solid=true;
-    	add(new Tile("rug.png"),60,270/2-17);
-    	add(new Tile("helloworld.png"){
+    	add(new MapEntity(new Sprite("tree1.png"),"tree1_mask.png",21,55),480/2-61,270/2-81).solid=true;
+    	add(new MapEntity(new Sprite("rock1.png"),"rock1_mask.png",0,14),240-33,16).solid=true;
+    	add(new TileEntity("rug.png"),60,270/2-17);
+    	add(new TileEntity("helloworld.png"){
     		void collide(MapEntity other){
     			if(other==player){
     				System.out.println("Hello world!");

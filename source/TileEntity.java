@@ -19,16 +19,8 @@ Please note that in the event that any source file or other resource in this pro
 
 package source;
 
-/**
- * A general-purpose implementation of a block entity.
- * 
- * Suggestion: Subclass into specific block types?
- */
-public class Block extends MapEntity{
-	Block(String sprite,int x,int y){
-		super(sprite,"block_mask.png",0,9);
-		this.x=x;
-		this.y=y;
-		solid=true;
+public class TileEntity extends MapEntity{
+	TileEntity(String sprite){
+		super(new Sprite(sprite),sprite);
 	}
 }
