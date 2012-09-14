@@ -35,6 +35,7 @@ TODO:
    - Export to a file (programming routines to read from the file should come later)
  * Map loading routine
  * Fix the sprite-sliding glitch (walking in any direction for a second stops the animation, making the sprite look like it's sliding)
+ * Fix the pausing of the convobox
 
 14/09/2012
  * Renamed Tile to TileEntity
