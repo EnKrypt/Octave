@@ -170,7 +170,7 @@ public class Convobox implements KeyListener{
 	public void drawBG(Graphics g){
 		g.setColor(bg);
 		g.fillRect(xoff,yoff,wt,ht);
-		g.setColor(Color.BLACK);
+		g.setColor(fg);
 		g.drawRect(xoff+10,yoff+10,wt-20,ht-20);
 		g.setColor(Color.WHITE);
 	}
