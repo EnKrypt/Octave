@@ -23,48 +23,51 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Implements he game's conversation box
+ * Implements the game's conversation box.
 **/
-
 public class Convobox implements KeyListener{
+	/**
+	 * The padding of the convobox from the sides of the screen.
+	 */
+	static final int PADDING=8;
 	
 	/**
-	 * Font of the text in the convobox
+	 * The value of the key that continues a conversation.
+	 */
+	static final int CONTKEY=KeyEvent.VK_ENTER;
+	
+	/**
+	 * Font of the text in the convobox.
 	**/
-	String font;
+	Font font;
 	
 	/**
-	 * Size of the comvobox font
-	**/
-	int fontsize;
-	
-	/**
-	 * Array containing different paragraphs to display
+	 * The array containing different paragraphs to display.
 	**/
 	String[] msgs;
 	
 	/**
-	 * Contains the number of the current displaying character of the paragraph
+	 * The number of the current displaying character of the paragraph.
 	**/
 	int pos=0;
 	
 	/**
-	 * The index of msgs[] that indicates to the current paragraph
+	 * The index of msgs[] that indicates the current paragraph.
 	**/
 	int msg=0;
 	
 	/**
-	 * The frame count that controls the speed of the characters to be rendered
+	 * The frame count that controls the speed of the characters to be rendered.
 	**/
 	int count=0;
 	
 	/**
-	 * Flag which represents if there is any more work to be done by the convobox or not
+	 * Flag which represents if there is any more work to be done by the convobox.
 	**/
 	boolean done=true;
 	
 	/**
-	 * Flag which represents if the convobox needs to wait for a keypress to continue or not
+	 * Flag which represents if the convobox is waiting for a key press.
 	**/
 	boolean pause=false; 
 	
@@ -74,51 +77,94 @@ public class Convobox implements KeyListener{
 	int speed;
 	
 	/**
-	 * The Height of the convobox.
-	**/
-	int ht;
-	
-	/**
-	 * The Width of the convobox.
-	**/
-	int wt;
-	
-	/**
-	 * The horizontal offset from the screen.
-	**/
-	int xoff;
-	
-	/**
-	 * The vertical offset from the screen.
-	**/
-	int yoff;
-	
-	/**
-	 * Background color for the convobox
+	 * Background color for the convobox.
 	**/
 	Color bg=Color.WHITE;
 	
 	/**
-	 * Color of text in convobox
+	 * Color of text in convobox.
 	**/
 	Color fg=Color.BLACK;
 	
-	public Convobox(Color bgc,Color fgc,String f,int fs,int xo,int yo,int w,int h){
-		xoff=xo;
-		yoff=yo;
-		wt=w;
-		ht=h;
-		bg=bgc;
-		fg=fgc;
-		font=f;
-		fontsize=fs;
+	/**
+	 * The map to which the convobox is being rendered.
+	 */
+	Map map;
+	
+	/**
+	 * @param m The map to which the convobox is being rendered.
+	 * @param s The speed of the characters being rendered.
+	 */
+	public Convobox(Map m,int s){
+		map=m;
+		speed=s;
+		m.addKeyListener(this);
 	}
 	
 	/**
-	 * Initiates display of the messages
+	 * @param m The map to which the convobox is being rendered.
+	 */
+	public Convobox(Map m){
+		map=m;
+		speed=Octave.FPS;
+		m.addKeyListener(this);
+	}
+	
+	/**
+	 * Get the width of the convobox.
+	 * 
+	 * @return The convobox's width.
+	 */
+	int getWidth(){
+		return map.getWidth()-PADDING*2;
+	}
+	
+	/**
+	 * Get the height of the convobox.
+	 * 
+	 * @return The convobox's height.
+	 */
+	int getHeight(){
+		return map.getHeight()/3-PADDING;
+	}
+	
+	/**
+	 * Returns the vertical offset of the convobox.
+	 * 
+	 * @return The vertical offset.
+	 */
+	int getVOff(){
+		return map.getHeight()*2/3;
+	}
+	
+	/**
+	 * Returns the horizontal offset of the convobox.
+	 * 
+	 * @return The horizontal offset.
+	 */
+	int getHOff(){
+		return PADDING;
+	}
+	
+	/**
+	 * Initiates the conversation.
 	 *
-	 * @param m The message(s) to be displayed
-	 * @param s The speed to display the message
+	 * @param m The message(s) to be displayed.
+	**/
+	public void say(String m){
+		msgs=m.split("\t");
+		pos=1;
+		msg=0;
+		count=0;
+		done=false;
+		pause=false;
+	}
+	
+	/**
+	 * Initiates the conversation with a given speed.
+	 *
+	 * @param m The message(s) to be displayed.
+	 * @param s The speed of the message(s).
 	**/
 	public void say(String m,int s){
 		msgs=m.split("\t");
@@ -136,42 +182,48 @@ public class Convobox implements KeyListener{
 	 * @param g The graphic to which the entity should be drawn.
 	**/
 	public void draw(Graphics g){
+		//Don't render anything if it's done and not pausing
+		if(done && !pause){
+			return;
+		}
+		//Don't render anything if there's no more messages
+		if(msg>=msgs.length){
+			return;
+		}
 		drawBG(g);
-		if (done)
-			return;
+		//Increment count and check if it's time to add another character
 		count+=speed;
-		if (count>=Octave.FPS){
+		if(count>=Octave.FPS){
 			count=0;
-			pos++;
+			++pos;
 		}
-		if (pos>=msgs[msg].length()){
-			msg++;
+		//Pause if the current message is done
+		if(pos>=msgs[msg].length()){
 			pause=true;
+			//makes sure pos stays within range
+			pos-=pos%msgs[msg].length();
 		}
-		if (msg>=msgs.length){
+		//Be done if there are no more messages
+		if(msg>=msgs.length){
 			done=true;
-			return;
 		}
-		if (msgs[msg].charAt(pos)=='\0'){
-			pause=true;
-		}
-		drawText(g,msgs[msg]);
+		//Draw the text up to the current position (ignoring \0)
+		drawText(g,msgs[msg].substring(0,pos).replace("\0",""));
 	}
 	
-	public void keyTyped(KeyEvent e){
-	
-	}
+	public void keyTyped(KeyEvent e){}
 
     public void keyPressed(KeyEvent e){
-    	if (e.getKeyCode()==KeyEvent.VK_ENTER){
-			pause=false;
-			pos=1;
+    	if(e.getKeyCode()==CONTKEY){
+    		if(pause){
+				pause=false;
+				pos=1;
+				++msg;
+    		}
 		}
     }
 
-    public void keyReleased(KeyEvent e){
-        
-    }
+    public void keyReleased(KeyEvent e){}
 	
 	/**
 	 * Draw out the background
@@ -179,23 +231,23 @@ public class Convobox implements KeyListener{
 	 * @param g The graphic to which the entity should be drawn.
 	**/
 	public void drawBG(Graphics g){
+		int x=getHOff(),y=getVOff();
+		int w=getWidth(),h=getHeight();
 		g.setColor(bg);
-		g.fillRect(xoff,yoff,wt,ht);
+		g.fillRect(x,y,w,h);
 		g.setColor(fg);
-		g.drawRect(xoff+10,yoff+10,wt-20,ht-20);
-		g.setColor(Color.WHITE);
+		g.drawRect(x+10,y+10,w-20,h-20);
 	}
 	
 	/**
 	 * Draw out the text
 	 *
 	 * @param g The graphic to which the entity should be drawn.
+	 * @param m The message to draw.
 	**/
-	public void drawText(Graphics g,String mes){
-		Font fon=new Font(font,Font.PLAIN,fontsize);
-		g.setFont(fon);
+	public void drawText(Graphics g,String m){
+		g.setFont(font);
 		g.setColor(fg);
-		g.drawChars(mes.toCharArray(),0,pos,xoff+25,yoff+35);
-		g.setColor(Color.WHITE);
+		g.drawString(m,getHOff()+25,getVOff()+35);
 	}
 }

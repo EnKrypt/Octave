@@ -236,7 +236,7 @@ public class MapEditor extends JFrame{
 		setTitle("Octave Map Editor v1.0.0.0 Alpha");
 		setSize(640,480);
 		setVisible(true);
-		final MapEditor t=this;
+		//final MapEditor t=this;
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				System.exit(0);

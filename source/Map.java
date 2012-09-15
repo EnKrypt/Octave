@@ -55,7 +55,7 @@ public class Map extends JPanel{
     public void loadPlayground(){
     	Octave.game.setSize(480,400);
         player=new Character(120,90);
-		cbox=new Convobox(Color.YELLOW,Color.BLACK,Font.MONOSPACED,12,0,250,463,110);
+		cbox=new Convobox(this);
         addKeyListener(player);
 		add(player);
     	int s=13;
@@ -80,7 +80,7 @@ public class Map extends JPanel{
     			}
     		}
     	},320,270/2-32);
-		cbox.say("Octave loaded",20);
+		cbox.say("Octave loaded.\0\0\0.\0\0\0.\0\0\0\0\0 Have fun!\tMessage 2.",20);
     }
 
     public void paintComponent(Graphics g){

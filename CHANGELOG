@@ -58,6 +58,7 @@ TODO:
  * Added the Convobox class
  * Refined the Convobox element to make it work.
  * Font in convobox is now customizable.
+ * Cleaned up convobox code/fixed bugs.
 
 TODO:
  * Add map building code to MapEditor
