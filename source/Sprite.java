@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.net.*;
 
 import javax.imageio.ImageIO;
 
@@ -92,7 +93,10 @@ public class Sprite{
     Sprite(String fname,int cols,int rows,int hsep,int vsep,int hoff,int voff){
     	BufferedImage img=null;
         try{
-            img=ImageIO.read(new File(Octave.IMGROOT+fname));
+			if (Octave.codeBase!=null)
+				img=ImageIO.read(new URL(Octave.codeBase,Octave.IMGROOT+fname));
+			else
+				img=ImageIO.read(new File(Octave.IMGROOT+fname));
 			if(img==null){
 				throw new IOException("Sprite");
 			}

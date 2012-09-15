@@ -85,7 +85,7 @@ public class Map extends JPanel{
 
     public void paintComponent(Graphics g){
         g.setColor(Color.WHITE);
-        g.fillRect(0,0,500,300);
+        g.fillRect(0,0,500,500);
 		for(MapEntity entity:entities){
 			entity.draw(g,this);
 		}

@@ -59,6 +59,9 @@ TODO:
  * Refined the Convobox element to make it work.
  * Font in convobox is now customizable.
  * Cleaned up convobox code/fixed bugs.
+ * Made Octave an applet such that it works if executed standalone or through browser
+ * Changed Image loaders to work with limited permissions
+ * Inherited from JApplet , made init()
 
 TODO:
  * Add map building code to MapEditor

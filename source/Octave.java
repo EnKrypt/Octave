@@ -28,8 +28,10 @@ package source;
 
 import java.awt.event.*;
 import java.io.File;
-
+import java.applet.*;
 import javax.swing.*;
+import java.lang.reflect.*;
+import java.net.*;
 
 
 /**
@@ -37,7 +39,7 @@ import javax.swing.*;
  *
  * It contains the entry point, {@link #main(String[])}
 **/
-public class Octave extends JFrame implements ActionListener{
+public class Octave extends JApplet implements ActionListener{
 	static final long serialVersionUID=1000;
 	
 	/**
@@ -45,6 +47,11 @@ public class Octave extends JFrame implements ActionListener{
 	 */
 	public static Octave game;
 	
+	/**
+	 * The root folder of the icon resources
+	**/
+	public static URL codeBase=null;
+
 	/**
 	 * How much to scale certain objects
 	 */
@@ -73,7 +80,7 @@ public class Octave extends JFrame implements ActionListener{
 	 * The root folder of the icon resources
 	**/
 	public static final String ICONROOT=RCROOT+"icons"+File.separator;
-
+	
 	/**
 	 * The game's map controller instance.
 	 *
@@ -87,17 +94,26 @@ public class Octave extends JFrame implements ActionListener{
     Timer step;
 
 	public Octave(){
-		super("Octave - v1.1.0 Alpha");
+		JFrame frame=new JFrame("Octave - v1.1.0 Alpha");
 		game=this;
-		setSize(500,500);
+		frame.setSize(500,500);
 		map=new Map();
-		setContentPane(map);
-		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setContentPane(map);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         step=new Timer(DELAY,this);
 		game.step.start();
 	}
 
+	public void init(){
+		game=this;
+		codeBase=getCodeBase();
+		map=new Map();
+		setContentPane(map);
+	}
+	
+	public void stop(){ }
+	
 	public static void main(String args[]){
 		game=new Octave();
 	}

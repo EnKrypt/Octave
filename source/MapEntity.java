@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.*;
 import java.io.File;
+import java.net.*;
 
 /**
  * Superclass of any object that the player can interact with on the screen.
@@ -85,7 +86,10 @@ public class MapEntity{
         mx=maskx*Octave.SCALE;
         my=masky*Octave.SCALE;
         try{
-			mask=ImageIO.read(new File(Octave.IMGROOT+cmask));
+			if (Octave.codeBase!=null)
+				mask=ImageIO.read(new URL(Octave.codeBase,Octave.IMGROOT+cmask));
+			else
+				mask=ImageIO.read(new File(Octave.IMGROOT+cmask));
 			if(mask==null){
 				throw new IOException("Mask");
 			}
