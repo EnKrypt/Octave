@@ -41,3 +41,9 @@ TODO:
  * Consolidated sprite functions into Sprite
  * Fixed bugs related to Sprite
  * Created MapEditor
+ * Made MapEditor's layout (vibrantly colored, no content)
+ 
+ 15/09/2012
+ * Made convobox
+ * Added MapEditor controls
+ * Added code for MapEditor grid and controls

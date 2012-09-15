@@ -27,6 +27,8 @@ Please note that in the event that any source file or other resource in this pro
 package source;
 
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
 
 
@@ -57,11 +59,20 @@ public class Octave extends JFrame implements ActionListener{
 	 * The calculated delay in milliseconds of the game.
 	**/
     public static final int DELAY=1000/FPS;
+	/**
+	 * The root folder of all resources
+	**/
+	public static final String RCROOT="resources"+File.separator;
 
 	/**
 	 * The root folder of the image resources
 	**/
-	public static final String IMGROOT="resources/images/";
+	public static final String IMGROOT=RCROOT+"images"+File.separator;
+
+	/**
+	 * The root folder of the icon resources
+	**/
+	public static final String ICONROOT=RCROOT+"icons"+File.separator;
 
 	/**
 	 * The game's map controller instance.
