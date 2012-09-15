@@ -31,7 +31,7 @@ import javax.imageio.ImageIO;
 
 /**
  * An animated image.
- */
+**/
 public class Sprite{
     /**
      * A list of the sprite frames.
@@ -179,7 +179,6 @@ public class Sprite{
    **/
    void draw(Graphics g,ImageObserver o,int x,int y){
        g.drawImage(frames[mode*framespermode+frame],x,y,o);
-       System.out.println();
        //Update the update count/frame
        updatecount+=updaterate;
        if(updatecount>=Octave.FPS){
