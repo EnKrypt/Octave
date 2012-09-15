@@ -220,6 +220,11 @@ public class Convobox implements KeyListener{
 				pos=1;
 				++msg;
     		}
+    		else{
+    			if(msg<msgs.length){
+    				pos=msgs[msg].length();
+    			}
+    		}
 		}
     }
 
