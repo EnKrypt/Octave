@@ -21,7 +21,6 @@ package source;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 /**
  * Implements he game's conversation box
