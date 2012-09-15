@@ -55,7 +55,7 @@ public class Map extends JPanel{
     public void loadPlayground(){
     	Octave.game.setSize(480,400);
         player=new Character(120,90);
-		cbox=new Convobox(Color.YELLOW,Color.BLACK,0,250,463,110);
+		cbox=new Convobox(Color.YELLOW,Color.BLACK,Font.MONOSPACED,12,0,250,463,110);
         addKeyListener(player);
 		add(player);
     	int s=13;

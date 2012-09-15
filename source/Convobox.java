@@ -30,6 +30,16 @@ import javax.swing.*;
 public class Convobox implements KeyListener{
 	
 	/**
+	 * Font of the text in the convobox
+	**/
+	String font;
+	
+	/**
+	 * Size of the comvobox font
+	**/
+	int fontsize;
+	
+	/**
 	 * Array containing different paragraphs to display
 	**/
 	String[] msgs;
@@ -94,13 +104,15 @@ public class Convobox implements KeyListener{
 	**/
 	Color fg=Color.BLACK;
 	
-	public Convobox(Color bgc,Color fgc,int xo,int yo,int w,int h){
+	public Convobox(Color bgc,Color fgc,String f,int fs,int xo,int yo,int w,int h){
 		xoff=xo;
 		yoff=yo;
 		wt=w;
 		ht=h;
 		bg=bgc;
 		fg=fgc;
+		font=f;
+		fontsize=fs;
 	}
 	
 	/**
@@ -181,8 +193,10 @@ public class Convobox implements KeyListener{
 	 * @param g The graphic to which the entity should be drawn.
 	**/
 	public void drawText(Graphics g,String mes){
+		Font fon=new Font(font,Font.PLAIN,fontsize);
+		g.setFont(fon);
 		g.setColor(fg);
-		g.drawChars(mes.toCharArray(),0,pos,xoff+30,yoff+50);
+		g.drawChars(mes.toCharArray(),0,pos,xoff+25,yoff+35);
 		g.setColor(Color.WHITE);
 	}
 }

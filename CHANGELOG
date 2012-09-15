@@ -47,3 +47,9 @@ TODO:
  * Modified playground to implement color cubes
  * Added the Convobox class
  * Refined the Convobox element to make it work.
+ 
+15/09/2012
+ * Font in convobox is now customizable.
+ * Modified CHANGELOG
+   - Put the TODO List below the Logs.
+ 
