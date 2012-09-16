@@ -28,7 +28,7 @@ public class Character extends Mobile implements KeyListener{
 	/**
 	 * The image speed when the character is walking
 	**/
-	public static final int WALKSPEED=8;
+	public static final int WALKSPEED=9;
     
     /**
      * Key values (used to calculate direction).

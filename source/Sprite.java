@@ -24,51 +24,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
-import java.net.*;
-
-import javax.imageio.ImageIO;
 
 /**
  * An animated image.
 **/
-public class Sprite extends Graphic{
-    /**
-     * A list of the sprite frames.
-    **/
-    BufferedImage frames[];
-    
-    /**
-     * The number of horizontal images in frames.
-    **/
-    int framespermode;
-    
-    /**
-     * The number of vertical images in frames.
-    **/
-    int nummodes;
-    
-    /**
-     * The speed at which the entity's sprite updates.
-    **/
-    int updaterate;
-    
-    /**
-     * The counter for the sprite image updater;
-    **/
-    int updatecount;
-    
-    /**
-     * The width of a frame.
-     */
-    int fw;
-    
-    /**
-     * The height of a frame.
-     */
-    int fh;
-    
+public class Sprite{
+	SpriteBase base;
+	
     /**
      * The mode of the entity (used to implement different animation cycles).
     **/
@@ -78,6 +40,16 @@ public class Sprite extends Graphic{
      * The current frame of the current cycle.
     **/
     int frame;
+    
+    /**
+     * The counter for the sprite image updater;
+    **/
+    int updatecount;
+    
+    /**
+     * The speed at which the entity's sprite updates.
+    **/
+    int updaterate;
     
     /**
      * Load a spritesheet from a file.
@@ -91,38 +63,7 @@ public class Sprite extends Graphic{
      * @param voff The vertical offset of the upper left frame.
      */
     Sprite(String fname,int cols,int rows,int hsep,int vsep,int hoff,int voff){
-    	BufferedImage img=null;
-        try{
-			if (Octave.codeBase!=null)
-				img=ImageIO.read(new URL(Octave.codeBase,Octave.IMGROOT+fname));
-			else
-				img=ImageIO.read(new File(Octave.IMGROOT+fname));
-			if(img==null){
-				throw new IOException("Sprite");
-			}
-        }
-        catch(IOException e){
-			System.out.println("Sprite resource not found.");
-			System.exit(0);
-		}
-        img=scale(img,Octave.SCALE);
-        //member setting
-        framespermode=cols;
-        nummodes=rows;
-        frames=new BufferedImage[cols*rows];
-        //local zooming
-        hsep*=Octave.SCALE;
-        vsep*=Octave.SCALE;
-        hoff*=Octave.SCALE;
-        voff*=Octave.SCALE;
-        //frame width and height
-        fw=(img.getWidth()-hoff)/cols-hsep;
-        fh=(img.getHeight()-voff)/rows-vsep;
-        for(int i=0;i<rows;i++){
-            for(int j=0;j<cols;j++){
-                frames[i*cols+j]=img.getSubimage(hoff+j*(fw+hsep),voff+i*(fh+vsep),fw,fh);
-            }
-        }
+    	base=new SpriteBase(fname,cols,rows,hsep,vsep,hoff,voff);
     }
 
     /**
@@ -159,6 +100,15 @@ public class Sprite extends Graphic{
     }
 
     /**
+     * Load a spritesheet from a file.
+     * 
+     * @param fname The filename of the spritesheet.
+     */
+    Sprite(SpriteBase b){
+    	base=b;
+    }
+
+    /**
      * Private helper function that scales a BufferedImage.
      * 
      * @param img The image to scale.
@@ -182,11 +132,11 @@ public class Sprite extends Graphic{
     * @param g The graphic to which the entity should be drawn.
    **/
    void draw(Graphics g,ImageObserver o,int x,int y){
-       g.drawImage(frames[mode*framespermode+frame],x,y,o);
+       base.draw(g,o,x,y,frame,mode);
        //Update the update count/frame
        updatecount+=updaterate;
        if(updatecount>=Octave.FPS){
-    	   frame=(frame+1)%framespermode;
+    	   frame=(frame+1)%base.framespermode;
            updatecount=0;
        }
    }
@@ -217,10 +167,10 @@ public class Sprite extends Graphic{
    }
    
    int getWidth(){
-	   return fw;
+	   return base.getWidth();
    }
    
    int getHeight(){
-	   return fh;
+	   return base.getHeight();
    }
 }
