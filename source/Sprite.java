@@ -198,8 +198,6 @@ public class Sprite{
    **/
    void setMode(int m){
        mode=m;
-       frame=0;
-       updatecount=0;
    }
    
    /**
