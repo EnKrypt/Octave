@@ -24,70 +24,11 @@ import java.awt.event.*;
 /**
  * Implements the player's avatar.
 **/
-public class Character extends MapEntity implements KeyListener{
+public class Character extends Mobile implements KeyListener{
 	/**
 	 * The image speed when the character is walking
 	**/
 	public static final int WALKSPEED=8;
-	
-	/**
-	 * No direction
-	 */
-	public static final int NODIR=-1;
-	
-	/**
-	 * The constant representing down.
-	 */
-	public static final int DOWN=0;
-	
-	/**
-	 * The constant representing left.
-	 */
-	public static final int LEFT=1;
-	
-	/**
-	 * The constant representing right.
-	 */
-	public static final int RIGHT=2;
-	
-	/**
-	 * The constant representing up.
-	 */
-	public static final int UP=3;
-
-    /**
-     * The constant representing a direction going down and right.
-    **/
-    public static final int DOWNRIGHT=4;
-
-    /**
-     * The constant representing a direction going down and left.
-    **/
-    public static final int DOWNLEFT=5;
-
-    /**
-     * The constant representing a direction going up and left.
-    **/
-    public static final int UPLEFT=6;
-	
-    /**
-     * The constant representing a direction going up and right.
-    **/
-    public static final int UPRIGHT=7;
-
-    /**
-     * The speed of the character in any direction (used to calculate movement).
-    **/
-    int speed;
-
-    /**
-     * The direction of the character
-     * @see source.Character.UPRIGHT
-     * @see source.Character.DOWNRIGHT
-     * @see source.Character.DOWNLEFT
-     * @see source.Character.UPLEFT
-    **/
-    int direction;
     
     /**
      * Key values (used to calculate direction).
@@ -97,47 +38,11 @@ public class Character extends MapEntity implements KeyListener{
     boolean[] keys=new boolean[4];
     
     public Character(int x,int y){
-        super(new Sprite("character.png",3,8),"character_mask.png",9,26);
+        super(new Sprite("character.png",3,8),new Mask("character_mask.png"),9,26);
         this.x=x;
         this.y=y;
 		solid=true;
-		sprite.setFrame(1);
-    }
-    
-    public void step(){
-    	prevx=x;
-    	prevy=y;
-        switch(direction){
-        	//2* to accommodate only one component being changed
-        	case DOWN:
-        		y+=speed*2;
-        		break;
-        	case LEFT:
-        		x-=speed*2;
-        		break;
-        	case RIGHT:
-        		x+=speed*2;
-        		break;
-        	case UP:
-        		y-=speed*2;
-        		break;
-            case UPRIGHT:
-                x+=2*speed;
-                y-=speed;
-                break;
-            case DOWNRIGHT:
-                x+=2*speed;
-                y+=speed;
-                break;
-            case DOWNLEFT:
-                x-=2*speed;
-                y+=speed;
-                break;
-            case UPLEFT:
-                x-=2*speed;
-                y-=speed;
-                break;
-        }
+		((Sprite)sprite).setFrame(1);
     }
     
     /**
@@ -148,14 +53,14 @@ public class Character extends MapEntity implements KeyListener{
     public void goDirection(int d){
     	if(d==NODIR){
     		speed=0;
-    		sprite.setSpeed(0);
-    		sprite.setFrame(1);
+    		((Sprite)sprite).setSpeed(0);
+    		((Sprite)sprite).setFrame(1);
     	}
     	else{
 	        direction=d;
 	        speed=2;
-	        sprite.setSpeed(WALKSPEED);
-	        sprite.setMode(d);
+	        ((Sprite)sprite).setSpeed(WALKSPEED);
+	        ((Sprite)sprite).setMode(d);
     	}
     }
     
@@ -166,33 +71,33 @@ public class Character extends MapEntity implements KeyListener{
         int h=(keys[1]?1:0)-(keys[0]?1:0);
         int v=(keys[3]?1:0)-(keys[2]?1:0);
         if(h==0 && v==0){
-        	return NODIR;
+        	return Mobile.NODIR;
         }
         if(h==0 && v<0){
-        	return UP;
+        	return Mobile.UP;
         }
         else if(h>0 && v<0){
-        	return UPRIGHT;
+        	return Mobile.UPRIGHT;
         }
         else if(h>0 && v==0){
-        	return RIGHT;
+        	return Mobile.RIGHT;
         }
         else if(h>0 && v>0){
-        	return DOWNRIGHT;
+        	return Mobile.DOWNRIGHT;
         }
         else if(h==0 && v>0){
-        	return DOWN;
+        	return Mobile.DOWN;
         }
         else if(h<0 && v>0){
-        	return DOWNLEFT;
+        	return Mobile.DOWNLEFT;
         }
         else if(h<0 && v==0){
-        	return LEFT;
+        	return Mobile.LEFT;
         }
         else if(h<0 && v<0){
-        	return UPLEFT;
+        	return Mobile.UPLEFT;
         }
-        return NODIR;
+        return Mobile.NODIR;
     }
     
     public void keyTyped(KeyEvent e){}
@@ -238,7 +143,11 @@ public class Character extends MapEntity implements KeyListener{
         goDirection(getDirection());
     }
     
-    public void collide(MapEntity other){
+    public void step(){
+    	move();
+    }
+    
+    public void collide(Collidable other){
     	if(other.solid){
     		//Reset location (should resolve collision)
     		x=prevx;

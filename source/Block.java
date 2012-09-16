@@ -20,15 +20,11 @@ Please note that in the event that any source file or other resource in this pro
 package source;
 
 /**
- * A general-purpose implementation of a block entity.
- * 
- * Suggestion: Subclass into specific block types?
+ * A generic class for anything that doesn't move.
  */
-public class Block extends MapEntity{
-	Block(String sprite,int x,int y){
-		super(sprite,"block_mask.png",0,9);
-		this.x=x;
-		this.y=y;
+public class Block extends Collidable{
+	Block(Graphic g,Mask mask,int maskx,int masky){
+		super(g,mask,maskx,masky);
 		solid=true;
 	}
 }

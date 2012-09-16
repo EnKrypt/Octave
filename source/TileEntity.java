@@ -19,8 +19,8 @@ Please note that in the event that any source file or other resource in this pro
 
 package source;
 
-public class TileEntity extends MapEntity{
+public class TileEntity extends Collidable{
 	TileEntity(String sprite){
-		super(new Sprite(sprite),sprite);
+		super(new Mask(sprite),new Mask(sprite),0,0);
 	}
 }

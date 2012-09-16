@@ -62,6 +62,8 @@ TODO:
  * Made Octave an applet such that it works if executed standalone or through browser
  * Changed Image loaders to work with limited permissions
  * Inherited from JApplet , made init()
+ * Fixed image sliding glitch
+ * Added a lot more abstraction
 
 TODO:
  * Add map building code to MapEditor

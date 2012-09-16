@@ -33,7 +33,7 @@ import javax.imageio.ImageIO;
 /**
  * An animated image.
 **/
-public class Sprite{
+public class Sprite extends Graphic{
     /**
      * A list of the sprite frames.
     **/
@@ -214,5 +214,13 @@ public class Sprite{
     */
    void setFrame(int f){
 	   frame=f;
+   }
+   
+   int getWidth(){
+	   return fw;
+   }
+   
+   int getHeight(){
+	   return fh;
    }
 }

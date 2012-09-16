@@ -1,4 +1,3 @@
-package source;
 /*
 Copyright (C) 2012 Arvind Kumar
 
@@ -18,18 +17,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header, it should be assumed to be under the same license.
 */
 
-import java.util.Comparator;
+package source;
 
-
-/**
- * Sorts entities by y value for rendering order.
- */
-public class RenderOrder implements Comparator<MapEntity>{
-	@Override
-	public int compare(MapEntity o1,MapEntity o2){
-		if(o1 instanceof Collidable && o2 instanceof Collidable){
-			return (o1.y+((Collidable)o1).my)-(o2.y+((Collidable)o2).my);
-		}
-		return (o1.y)-(o2.y);
+public class Box extends Block {
+	Box(String s,int x,int y){
+		super(new Mask(s),new Mask("block_mask.png"),0,9);
+		this.x=x;
+		this.y=y;
 	}
 }

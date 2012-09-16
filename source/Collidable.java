@@ -1,4 +1,3 @@
-package source;
 /*
 Copyright (C) 2012 Arvind Kumar
 
@@ -18,60 +17,52 @@ along with this program.  If not,see <http://www.gnu.org/licenses/>
 Please note that in the event that any source file or other resource in this project does not include the above header,it should be assumed to be under the same license.
 */
 
- 
-import java.awt.image.*;
+package source;
+
 import java.awt.*;
+import java.awt.image.*;
 
 /**
- * Superclass of any object that the player can interact with on the screen.
-**/
-abstract public class MapEntity{
+ * A generic abstract class for all entities that handle collisions.
+ */
+public class Collidable extends MapEntity{	
 	/**
-	 * The entity's sprite.
-	 */
-	Graphic sprite;
+	 * The entity's collision mask.
+	**/
+	Mask mask;
     
     /**
-     * The x component of the entity's position.
-    **/
-    int x;
-    
-    /**
-     * The y component of the entity's position.
-    **/
-    int y;
-    
-    /**
-     * The last x value.
+     * The mask's horizontal offset from the entity's x position component.
      */
-    int prevx;
+    int mx;
     
     /**
-     * The last y value.
+     * The mask's vertical offset from the entity's y position component.
      */
-    int prevy;
+    int my;
     
     /**
-     * @param sprite A loaded sprite.
-	 * @param cmask The path to the entity's collision mask.
-	 * @param maskx The x offset of the mask over the sprite.
-	 * @param masky The y offset of the mask over the sprite.
-    **/
-    MapEntity(Graphic g){
-    	sprite=g;
+     * Whether or not the entity is solid.
+     */
+    boolean solid;
+    
+    Collidable(Graphic g,Mask m,int maskx,int masky){
+    	super(g);
+    	mask=m;
+        mx=maskx*Octave.SCALE;
+        my=masky*Octave.SCALE;
     }
     
-    /**
-     * Draw the entity to the graphic.
-     *
-     * @param g The graphic to which the entity should be drawn.
-    **/
+    //Overloaded to allow for drawing mask when debugging
     void draw(Graphics g,ImageObserver o){
-    	sprite.draw(g,o,x,y);
+    	super.draw(g,o);
+        //mask.draw(g,o,x+mx,y+my);
     }
 	
 	/**
-	 * Overloadable method called during a step event.
-	**/
-	void step(){}
+	 * Overloadable method called when entity collides with another.
+	 * 
+	 * @param other The other entity involved in the collision.
+	 */
+	void collide(Collidable other){}
 }

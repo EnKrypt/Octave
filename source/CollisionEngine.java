@@ -34,7 +34,7 @@ public class CollisionEngine{
 	 * @param o2 The second entity to check.
 	 * @return True if they're intersecting, false otherwise.
 	 */
-	public static boolean bounds_collision(MapEntity o1,MapEntity o2){
+	public static boolean bounds_collision(Collidable o1,Collidable o2){
 		return new Rectangle(o1.x+o1.mx,o1.y+o1.my,o1.mask.getWidth(),o1.mask.getHeight()).intersects(
 			new Rectangle(o2.x+o2.mx,o2.y+o2.my,o2.mask.getWidth(),o2.mask.getHeight())
 		);
@@ -47,7 +47,7 @@ public class CollisionEngine{
 	 * @param o2 The second entity to compare.
 	 * @return True if they're collided, false otherwise.
 	 */
-	public static boolean pixel_collision(MapEntity o1,MapEntity o2){
+	public static boolean pixel_collision(Collidable o1,Collidable o2){
 		if(!bounds_collision(o1,o2)){
 			return false;
 		}
