@@ -28,7 +28,7 @@ import java.awt.image.ImageObserver;
 /**
  * An animated image.
 **/
-public class Sprite{
+public class Sprite extends Graphic{
 	SpriteBase base;
 	
     /**
