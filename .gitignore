@@ -1,2 +1,11 @@
 # Pre-compiled class sources (projects should be pure code) #
 *.class
+*.jar
+
+# IDE generated files not strictly required #
+.classpath
+.project
+
+# Helper batch/shell scripts not part of the project #
+*.bat
+manifest.txt
